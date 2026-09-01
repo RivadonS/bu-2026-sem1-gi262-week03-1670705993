@@ -22,13 +22,19 @@ public class Character : Identity
             if (IsPotion(toX, toY))
             {
                 mapGenerator.potions[toX, toY].Hit();
+                mapGenerator.mapdata[positionX, positionY] = mapGenerator.empty;
                 positionX = toX;
                 positionY = toY;
                 transform.position = new Vector2(positionX, positionY);
             }
+            else if(IsDemonWalls(toX, toY))
+            {
+                mapGenerator.walls[toX, toY].Hit();
+            }
         }
         else
         {
+            mapGenerator.mapdata[positionX, positionY] = mapGenerator.empty;
             positionX = toX;
             positionY = toY;
             transform.position = new Vector2(positionX, positionY);
