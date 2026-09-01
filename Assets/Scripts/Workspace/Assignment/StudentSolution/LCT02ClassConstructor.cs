@@ -49,7 +49,6 @@ namespace Assignment.StudentSolution.LCT02
     {
         Dog dog1;
 
-        Dog dog2;
 
         public void Start()
         {
