@@ -6,16 +6,33 @@ using UnityEngine.UIElements;
 using static UnityEditor.PlayerSettings;
 using static UnityEngine.EventSystems.EventTrigger;
 
-public class Character : MonoBehaviour
+public class Character : Identity
 {
     public int energy;
     public int attackPoint;
     protected bool isFreeze;
-    OOPMapGenerator mapGenerator;
 
     public virtual void Move(Vector2 direction)
     {
+        int toX = (int)(positionX + direction.x);
+        int toY = (int)(positionY + direction.y);
 
+        if(HasPlacement(toX, toY))
+        {
+            if (IsPotion(toX, toY))
+            {
+                mapGenerator.potions[toX, toY].Hit();
+                positionX = toX;
+                positionY = toY;
+                transform.position = new Vector2(positionX, positionY);
+            }
+        }
+        else
+        {
+            positionX = toX;
+            positionY = toY;
+            transform.position = new Vector2(positionX, positionY);
+        }
     }
 
     public virtual void TakeDamage(int Damage)
@@ -39,12 +56,12 @@ public class Character : MonoBehaviour
     {
         // energy += healPoint;
         // Debug.Log("Current Energy : " + energy);
-        // เราสามารถเรียกใช้ฟังก์ชัน Heal โดยกำหนดให้ Bonuse = false ได้ เพื่อที่จะให้ logic ในการ heal อยู่ที่ฟังก์ชัน Heal อันเดียวและไม่ต้องเขียนซ้ำ
+        // เราสามารถเรียกใช้ฟังก์ชัน Heal โดยกำหนดให้ Bonus = false ได้ เพื่อที่จะให้ logic ในการ heal อยู่ที่ฟังก์ชัน Heal อันเดียวและไม่ต้องเขียนซ้ำ
         Heal(healPoint, false);
     }
-    public void Heal(int healPoint, bool Bonuse)
+    public void Heal(int healPoint, bool Bonus)
     {
-        energy += healPoint * (Bonuse ? 2 : 1);
+        energy += healPoint * (Bonus ? 2 : 1);
         Debug.Log("Current Energy : " + energy);
     }
 
@@ -69,30 +86,30 @@ public class Character : MonoBehaviour
     /// <returns></returns>
     public bool HasPlacement(int x, int y)
     {
-        // int mapData = mapGenerator.GetMapData(x, y);
-        // return mapData != mapGenerator.empty;
-        return false;
+        var mapData = mapGenerator.GetMapData(x, y);
+        return mapData != mapGenerator.empty;
+        //return false;
     }
 
     public bool IsDemonWalls(int x, int y)
     {
-        // int mapData = mapGenerator.GetMapData(x, y);
-        // return mapData == mapGenerator.demonWall;
-        return false;
+        var mapData = mapGenerator.GetMapData(x, y);
+        return mapData == mapGenerator.demonWall;
+        //return false;
     }
 
     public bool IsPotion(int x, int y)
     {
-        // int mapData = mapGenerator.GetMapData(x, y);
-        // return mapData == mapGenerator.potion;
-        return false;
+        var mapData = mapGenerator.GetMapData(x, y);
+        return mapData == mapGenerator.potion;
+        //return false;
     }
 
     public bool IsExit(int x, int y)
     {
-        // int mapData = mapGenerator.GetMapData(x, y);
-        // return mapData == mapGenerator.exit;
-        return false;
+        var mapData = mapGenerator.GetMapData(x, y);
+        return mapData == mapGenerator.exit;
+        //return false;
     }
 
     #endregion
