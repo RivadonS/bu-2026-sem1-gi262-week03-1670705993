@@ -113,6 +113,8 @@ public class OOPMapGenerator : MonoBehaviour
         }
         mapdata[X - 1, Y - 1] = exit;
         Exit.transform.position = new Vector3(X - 1, Y - 1, 0);
+
+        Exit.mapGenerator = this;
     }
 
     public string GetMapData(float x, float y)

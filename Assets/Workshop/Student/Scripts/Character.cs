@@ -31,6 +31,10 @@ public class Character : Identity
             {
                 mapGenerator.walls[toX, toY].Hit();
             }
+            else if (IsExit(toX, toY))
+            {
+                mapGenerator.Exit.Hit();
+            }
         }
         else
         {
