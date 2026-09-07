@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Assignment.StudentSolution
 {
-    public class Enemy
+    public class Enemy : Entity
     {
 
     }
