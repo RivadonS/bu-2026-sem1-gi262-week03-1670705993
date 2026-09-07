@@ -5,11 +5,14 @@ namespace Assignment.StudentSolution
     public class Player : Entity
     {
         public int score;
-        Item[] item;
+        private Item[] items;
 
         public void CollectItem(Item item)
         {
-            // Implement item collection logic here
+        }
+
+        protected void LevelUp()
+        {
         }
     }
 }
